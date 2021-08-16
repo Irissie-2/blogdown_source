@@ -1,0 +1,51 @@
+---
+title: Formula 1
+author: R package build
+date: '2021-08-13'
+slug: index.en-us
+categories: []
+tags: ["Formula 1"]
+keywords:
+  - tech
+---
+
+
+# Formula 1
+## Data analysis
+
+The goal is to analyse the pit stops 
+1. Which team has the fastest pit stops?
+2. Which driver has the fastest pit stops?
+2. Does the track make a difference in the speed of the pit stops?
+
+```{r, include = FALSE}
+pit_stops <- read.csv("~/Dropbox/My Mac (Iriss-MacBook-Pro.local)/Documents/GitHub/Data/Kaggle - F1 Driver Championships/pit_stops.csv")
+
+drivers <- read.csv("~/Dropbox/My Mac (Iriss-MacBook-Pro.local)/Documents/GitHub/Data/Kaggle - F1 Driver Championships/drivers.csv")
+
+races <- read.csv("~/Dropbox/My Mac (Iriss-MacBook-Pro.local)/Documents/GitHub/Data/Kaggle - F1 Driver Championships/races.csv")
+
+circuits <- read.csv("~/Dropbox/My Mac (Iriss-MacBook-Pro.local)/Documents/GitHub/Data/Kaggle - F1 Driver Championships/circuits.csv")
+```
+
+Pit stop data from 1950 - 2021
+```{r, echo=FALSE}
+head(pit_stops)
+head(drivers)
+head(races)
+head(circuits)
+```
+
+Combine datasets
+```{r, echo=FALSE, include = FALSE}
+library("dplyr")
+pit_stops_drivers <- merge(drivers,pit_stops, by = "driverId")
+pit_stops_drivers_circuits <- merge(pit_stops_drivers, races, by = "raceId")
+pit_stops_drivers_circuits_races <- merge(pit_stops_drivers_circuits, circuits, by = "circuitId")
+
+```
+
+```{r}
+head(pit_stops_drivers_circuits_races)
+```
+
